@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>弓削商船商船祭 - ホーム</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <a class="logo" href="index.html">弓削商船商船祭</a>
+      </div>
+
+      <button id="navToggle" class="nav-toggle" aria-label="メニュー切替"><span class="hamburger"></span></button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">ホーム</a>
+        <a href="schedule.html">イベントスケジュール</a>
+        <a href="survey.html">アンケート</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero-grid">
+      <div class="poster-frame" aria-live="polite">
+        <!-- img id="mainPoster"
+        src=""
+        alt="今年のポスター"
+        crossorigin="anonymous" / -->
+
+        <div id="posterPlaceholder" class="poster-placeholder" style="display:none;">
+          <div class="placeholder-inner">
+            <div class="placeholder-title">今年のポスターはただいま準備中です</div>
+            <div class="placeholder-sub">公開までしばらくお待ちください<br>（最新情報は公式ページで発表します）</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="info-card">
+        <h3>今年のテーマ</h3>
+        <p class="meta">公開予定
+        </p>
+        <h3>スケジュール</h3>
+        <p class="meta">11月1日（土）<br>11月2日（日）</p>
+        <h3>商船祭実行委員会 実行委員長</h3>
+        <p class="meta">公開予定</p>
+      </aside>
+    </section>
+
+    <h4 class="section-title">過去の弓削商船商船祭 ポスター</h4>
+    <section class="poster-wrap">
+      <div class="poster-slider">
+        <div class="poster-track" id="posterTrackHome"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container"><small>&copy; 2025 奥河 董馬（Toma Okugawa）. All Rights Reserved.</small></footer>
+
+  <script src="../js/shared.js"></script>
+  <script>
+    const posterImagesHome = [
+      "https://www.yuge.ac.jp/wp-content/uploads/2024/10/R06_festivalposter1.jpg",
+      "https://www.yuge.ac.jp/wp-content/uploads/2023/10/R05_festivalposter1.jpg",
+      "https://www.yuge.ac.jp/wp-content/uploads/2022/11/r04_festival_panphlet-e1667611495521.png",
+      "https://www.yuge.ac.jp/wp-content/uploads/2019/10/R01_festivalposter.jpg",
+      "https://www.yuge.ac.jp/wp-content/themes/yugekousen/data/download/2018/h30_festivalposter.png",
+      "https://www.yuge.ac.jp/wp-content/uploads/2013/09/h29_festival.jpg",
+      "https://www.yuge.ac.jp/wp-content/uploads/2013/09/h28_festival.jpg"
+    ];
+    window.buildPosterCarousel(posterImagesHome, 'posterTrackHome');
+
+    (function(){
+      const img = document.getElementById('mainPoster');
+      const placeholder = document.getElementById('posterPlaceholder');
+
+      function showPlaceholder(){
+        if(placeholder){
+          placeholder.style.display = 'flex';
+        }
+        if(img){
+          img.style.display = 'none';
+        }
+      }
+
+      function hidePlaceholder(){
+        if(placeholder){
+          placeholder.style.display = 'none';
+        }
+        if(img){
+          img.style.display = '';
+        }
+      }
+
+      if(!img){
+        showPlaceholder();
+      } else {
+        img.addEventListener('error', function(){ showPlaceholder(); });
+
+        img.addEventListener('load', function(){
+          if(!img.naturalWidth || img.naturalWidth === 0){
+            showPlaceholder();
+          } else {
+            hidePlaceholder();
+          }
+        });
+
+        if(img.complete){
+          if(!img.naturalWidth || img.naturalWidth === 0){
+            showPlaceholder();
+          } else {
+            hidePlaceholder();
+          }
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

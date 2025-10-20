@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>弓削商船商船祭 - アンケート</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .toast-success{
+      display:none;
+      padding:12px 16px;
+      border-radius:10px;
+      background: linear-gradient(90deg,#e6ffef,#d9fff2);
+      color: #064c3b;
+      box-shadow: 0 8px 20px rgba(6,100,80,0.08);
+      font-weight:700;
+      margin-bottom:12px;
+      text-align:center;
+    }
+    .toast-error{
+      display:none;
+      padding:12px 16px;
+      border-radius:10px;
+      background: linear-gradient(90deg,#ffe6e6,#ffd9d9);
+      color:#5a1414;
+      box-shadow: 0 8px 20px rgba(160,40,40,0.06);
+      font-weight:700;
+      margin-bottom:12px;
+      text-align:center;
+    }
+    .toast-show{ display:block !important; }
+
+    .other-input{
+      margin-top:8px;
+      display:none;
+    }
+    .other-input .input{
+      width:100%;
+      max-width:100%;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <a class="logo" href="index.html">弓削商船商船祭</a>
+      </div>
+      <button id="navToggle" class="nav-toggle" aria-label="メニュー切替"><span class="hamburger"></span></button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">ホーム</a>
+        <a href="schedule.html">イベントスケジュール</a>
+        <a href="survey.html" aria-current="page">アンケート</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:18px">
+    <section style="max-width:900px;margin:0 auto;padding:12px">
+      <section class="survey-wrap" aria-live="polite">
+        <div id="successToast" class="toast-success" role="status" aria-live="polite"></div>
+        <div id="errorToast" class="toast-error" role="alert" aria-live="assertive"></div>
+
+        <h3 style="margin-top:0;color:var(--accentA)">事前アンケート</h3>
+        <form id="surveyForm" novalidate>
+          <div id="surveyQuestions"></div>
+
+          <div class="form-actions" style="margin-top:12px">
+            <button type="submit" class="btn">送信</button>
+          </div>
+        </form>
+
+        <div id="surveyResult" style="display:none;margin-top:12px;padding:10px;border-radius:8px;background:#f6fffa;border:1px solid rgba(6,120,90,0.06)"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer container" style="margin-top:28px"><small>© 2025 奥河 董馬（Toma Okugawa）. All Rights Reserved.</small></footer>
+
+  <script src="../js/shared.js"></script>
+  <script>
+  (function(){
+    const RECIPIENT_EMAIL = 'okugawa20081114@gmail.com';
+
+    const questions = [
+      { id:'q1', q:'今回の商船祭に期待することは何ですか？', type:'short', required:true },
+      { id:'q2', q:'どのようなイベントがあれば嬉しいですか？（複数選択可）', type:'checkbox', options:['ステージイベント','模擬店','展示','体験ブース','その他'], required:false },
+      { id:'q3', q:'来場予定日はいつですか？', type:'mcq', options:['両日','11月1日（1日目）','11月2日（2日目）','未定'], required:false },
+      { id:'q4', q:'ご意見・ご要望などがあればご記入ください。', type:'long', required:false }
+    ];
+
+    const root = document.getElementById('surveyQuestions');
+
+    function buildSurveyUI(){
+      root.innerHTML = '';
+      questions.forEach(q=>{
+        const div = document.createElement('div'); div.className='q';
+        const label = document.createElement('label'); label.textContent = q.q + (q.required ? ' *' : ''); div.appendChild(label);
+
+        if(q.type === 'short'){
+          const inp = document.createElement('input'); inp.className = 'input'; inp.type = 'text'; inp.name = q.id;
+          if(q.required) inp.required = true;
+          div.appendChild(inp);
+        } else if(q.type === 'long'){
+          const ta = document.createElement('textarea'); ta.className='input'; ta.name=q.id; ta.rows=4;
+          if(q.required) ta.required = true;
+          div.appendChild(ta);
+        } else if(q.type === 'mcq' || q.type === 'checkbox'){
+          const wrap = document.createElement('div'); wrap.className='choices';
+          q.options.forEach((opt,i)=>{
+            const id = `${q.id}_${i}`;
+            const line = document.createElement('div'); line.className='choice-inline';
+            const input = document.createElement('input'); input.type = (q.type === 'mcq') ? 'radio' : 'checkbox';
+            input.name = q.id; input.value = opt; input.id = id;
+            const lab = document.createElement('label'); lab.htmlFor = id; lab.style.marginLeft='6px'; lab.textContent = opt;
+            line.appendChild(input); line.appendChild(lab); wrap.appendChild(line);
+          });
+
+          const otherDiv = document.createElement('div');
+          otherDiv.className = 'other-input';
+          otherDiv.innerHTML = `<input type="text" class="input" name="${q.id}_other" placeholder="その他の内容を入力してください">`;
+
+          div.appendChild(wrap);
+          div.appendChild(otherDiv);
+        }
+
+        root.appendChild(div);
+      });
+
+      attachOtherHandler();
+    }
+
+    function attachOtherHandler(){
+      const q2Name = 'q2';
+      const els = document.getElementsByName(q2Name);
+      if(!els || els.length === 0) return;
+
+      let parentQ = null;
+      for(const e of els){
+        let p = e.closest('.q');
+        if(p){
+          parentQ = p; break;
+        }
+      }
+      if(!parentQ) return;
+      const otherDiv = parentQ.querySelector('.other-input');
+      const otherInput = otherDiv ? otherDiv.querySelector('input[name="q2_other"]') : null;
+
+      let otherCheckbox = null;
+      for(const e of els){
+        if(e.value === 'その他') { otherCheckbox = e; break; }
+      }
+      if(!otherCheckbox && els.length > 0){
+        otherCheckbox = els[els.length - 1];
+      }
+
+      if(!otherCheckbox || !otherDiv || !otherInput) return;
+
+      function toggle(){
+        if(otherCheckbox.checked){
+          otherDiv.style.display = 'block';
+          otherInput.focus();
+        } else {
+          otherDiv.style.display = 'none';
+          otherInput.value = '';
+        }
+      }
+      otherCheckbox.addEventListener('change', toggle);
+
+      toggle();
+    }
+
+    buildSurveyUI();
+
+    const form = document.getElementById('surveyForm');
+    const resultBox = document.getElementById('surveyResult');
+    const successToast = document.getElementById('successToast');
+    const errorToast = document.getElementById('errorToast');
+
+    function showSuccessMessage(text){
+      successToast.textContent = text;
+      successToast.classList.add('toast-show');
+      setTimeout(()=>{ successToast.classList.remove('toast-show'); }, 5000);
+    }
+    function showErrorMessage(text){
+      errorToast.textContent = text;
+      errorToast.classList.add('toast-show');
+      setTimeout(()=>{ errorToast.classList.remove('toast-show'); }, 5000);
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      if(!form.reportValidity()) return;
+
+      const data = {};
+      let valid = true;
+      questions.forEach(q=>{
+        if(q.type === 'short' || q.type === 'long'){
+          const el = form.elements[q.id];
+          const v = el ? el.value.trim() : '';
+          data[q.id] = v;
+          if(q.required && !v) valid = false;
+        } else if(q.type === 'mcq'){
+          const els = form.elements[q.id];
+          let val = '';
+          if(els){
+            if(els.length === undefined) val = els.checked ? els.value : '';
+            else { for(let r of els) if(r.checked){ val = r.value; break; } }
+          }
+          data[q.id] = val;
+          if(q.required && !val) valid = false;
+        } else if(q.type === 'checkbox'){
+          const els = form.elements[q.id];
+          const arr = [];
+          if(els){
+            if(els.length === undefined){
+              if(els.checked) arr.push(els.value);
+            } else {
+              for(let c of els) if(c.checked) arr.push(c.value);
+            }
+          }
+          const otherEl = form.elements['q2_other'];
+          const otherCheckbox = (els && els.length) ? Array.from(els).find(x=>x.value==='その他') : (els && els.value==='その他' ? els : null);
+          if(otherCheckbox && otherCheckbox.checked){
+            const otherText = otherEl ? otherEl.value.trim() : '';
+            if(!otherText){
+              showErrorMessage('「その他」にチェックした場合は内容を入力してください。');
+              valid = false;
+            } else {
+              arr.push(`その他: ${otherText}`);
+            }
+          }
+          data[q.id] = arr;
+          if(q.required && arr.length === 0) valid = false;
+        }
+      });
+
+      if(!valid) return;
+
+      const subject = `商船祭 事前アンケート`;
+      const bodyText = `事前アンケート結果:\n\n${JSON.stringify(data, null, 2)}）`;
+      const encodedSubj = encodeURIComponent(subject);
+      const encodedBody = encodeURIComponent(bodyText);
+
+      if(encodedBody.length > 15000){
+        showErrorMessage('入力が長すぎるため、内容を短くしてください。');
+        return;
+      }
+
+      const mailto = `mailto:${encodeURIComponent(RECIPIENT_EMAIL)}?subject=${encodedSubj}&body=${encodedBody}`;
+      window.location.href = mailto;
+
+      showSuccessMessage('メール作成画面を開きました。内容を確認して送信してください。');
+      resultBox.style.display = 'block';
+      resultBox.innerHTML = '<strong>メール作成画面を開きました。内容を確認のうえ送信してください。</strong>';
+
+      setTimeout(()=>{ form.reset(); attachOtherHandler(); }, 600);
+    });
+
+  })();
+  </script>
+</body>
+</html>
