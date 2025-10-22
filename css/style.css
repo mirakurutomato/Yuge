@@ -95,7 +95,7 @@ html,body{height:100%;margin:0;font-family:Inter, "Noto Sans JP", system-ui, -ap
 .btn{background:var(--nav-accent);color:#fff;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
 .btn.secondary{background:#fff;color:var(--nav-accent);border:1px solid rgba(19,111,168,0.12)}
 
-.site-footer{max-width:var(--maxW);margin:30px auto;text-align:center;color:var(--muted);padding-top: 1.5rem;padding-bottom:3rem}
+.site-footer{max-width:var(--maxW);margin:30px auto;text-align:center;color:var(--muted);padding-bottom:3rem}
 
 @media(max-width:980px){
   .hero-grid{grid-template-columns:1fr 320px}
