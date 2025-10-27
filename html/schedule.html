@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,70 +8,280 @@
   <link rel="stylesheet" href="../css/style.css">
 
   <style>
-    #schedulePage{padding:20px 0}
+    #schedulePage {
+      padding: 20px 0
+    }
 
-    .page-hero{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0 20px}
-    .page-hero .title{font-size:1.35rem;font-weight:800;color:var(--nav-accent)}
-    .page-hero .subtitle{color:var(--muted);font-weight:600}
+    .page-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 12px 0 20px
+    }
 
-    .controls{display:flex;gap:12px;align-items:center}
-    .search{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.9);box-shadow:var(--shadow);border:1px solid rgba(16,32,48,0.04)}
-    .search input{border:0;outline:none;background:transparent;font-weight:600}
+    .page-hero .title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--nav-accent)
+    }
 
-    .date-filters{display:flex;gap:8px;flex-wrap:wrap}
-    .date-filters button{padding:8px 12px;border-radius:999px;border:1px solid rgba(16,32,48,0.04);background:transparent;cursor:pointer;font-weight:700}
-    .date-filters button.active{background:linear-gradient(90deg,var(--accentA) 0%, var(--accentC) 100%);color:white;border:none}
+    .page-hero .subtitle {
+      color: var(--muted);
+      font-weight: 600
+    }
 
-    .subtitle .highlight{padding:2px 8px;border-radius:999px;font-weight:900;background:linear-gradient(90deg,var(--accentA),var(--accentC));color:white;margin:0 6px}
-    .subtitle-meta{display:inline-block;margin-left:8px;font-weight:600;color:var(--muted);font-size:0.95rem}
-    .hint{margin-top:8px;font-size:0.86rem;color:rgba(19,50,68,0.7)}
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
 
-    .schedule-grid{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start;margin-top:8px}
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(16, 32, 48, 0.04)
+    }
 
-    .dates-list{position:sticky;top:88px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));box-shadow:var(--shadow);height:max-content}
-    .dates-list h4{margin:0 0 8px;color:var(--nav-accent)}
-    .dates-list .date-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;cursor:pointer}
-    .dates-list .date-item:hover{background:linear-gradient(90deg, rgba(131,58,180,0.06), rgba(252,176,69,0.04))}
+    .search input {
+      border: 0;
+      outline: none;
+      background: transparent;
+      font-weight: 600
+    }
 
-    .events-column{display:flex;flex-direction:column;gap:12px}
-    .date-group{background:var(--card);padding:14px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(16,32,48,0.03)}
-    .date-group .group-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .group-header .g-title{font-weight:800;color:var(--nav-accent)}
-    .group-header .g-info{color:var(--muted);font-weight:700}
+    .date-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
 
-    .events-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-    .event-card.custom{padding:12px;border-radius:12px;transition:transform .18s, box-shadow .18s}
-    .event-card.custom:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(10,20,40,0.12)}
-    .event-meta-row{display:flex;gap:10px;align-items:center;color:var(--muted);font-weight:700;font-size:0.95rem}
-    .event-desc{margin-top:8px;color:#133244}
+    .date-filters button {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 32, 48, 0.04);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 700
+    }
 
-    @media(max-width:980px){
-      .schedule-grid{grid-template-columns:1fr}
-      .events-grid{grid-template-columns:1fr}
-      .dates-list{position:relative;top:0}
+    .date-filters button.active {
+      background: linear-gradient(90deg, var(--accentA) 0%, var(--accentC) 100%);
+      color: white;
+      border: none
+    }
+
+    .subtitle .highlight {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--accentA), var(--accentC));
+      color: white;
+      margin: 0 6px
+    }
+
+    .subtitle-meta {
+      display: inline-block;
+      margin-left: 8px;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.95rem
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 0.86rem;
+      color: rgba(19, 50, 68, 0.7)
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 8px
+    }
+
+    .dates-list {
+      position: sticky;
+      top: 88px;
+      padding: 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.85));
+      box-shadow: var(--shadow);
+      height: max-content
+    }
+
+    .dates-list h4 {
+      margin: 0 0 8px;
+      color: var(--nav-accent)
+    }
+
+    .dates-list .date-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer
+    }
+
+    .dates-list .date-item:hover {
+      background: linear-gradient(90deg, rgba(131, 58, 180, 0.06), rgba(252, 176, 69, 0.04))
+    }
+
+    .events-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .date-group {
+      background: var(--card);
+      padding: 14px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(16, 32, 48, 0.03)
+    }
+
+    .date-group .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px
+    }
+
+    .group-header .g-title {
+      font-weight: 800;
+      color: var(--nav-accent)
+    }
+
+    .group-header .g-info {
+      color: var(--muted);
+      font-weight: 700
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px
+    }
+
+    .event-card.custom {
+      padding: 12px;
+      border-radius: 12px;
+      transition: transform .18s, box-shadow .18s
+    }
+
+    .event-card.custom:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 48px rgba(10, 20, 40, 0.12)
+    }
+
+    .event-meta-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.95rem
+    }
+
+    .event-desc {
+      margin-top: 8px;
+      color: #133244
+    }
+
+    @media(max-width:980px) {
+      .schedule-grid {
+        grid-template-columns: 1fr
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr
+      }
+
+      .dates-list {
+        position: relative;
+        top: 0
+      }
     }
 
     @media (max-width: 720px) {
-      .page-hero {flex-direction: column;align-items: flex-start;gap: 8px;}
-      .search input {width: 100%;}
-      .schedule-grid {grid-template-columns: 1fr;gap: 14px;}
-      .events-grid {grid-template-columns: 1fr;}
-      .date-filters button {padding: 6px 10px;font-size: 0.85rem;}
-      .date-item {font-size: 0.9rem;}
+      .page-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .search input {
+        width: 100%;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .date-filters button {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+      }
+
+      .date-item {
+        font-size: 0.9rem;
+      }
     }
 
     @media (max-width: 480px) {
-      .page-hero .title {font-size: 1.2rem;}
-      .page-hero .subtitle {font-size: 0.9rem;}
-      .search {padding: 6px 8px;}
-      .events-column {gap: 10px;}
-      .event-card.custom h3 {font-size: 0.95rem;}
-      .event-meta-row {flex-direction: column;gap: 4px;font-size: 0.85rem;}
-      .date-group {padding: 10px;}
-      .date-filters button {padding: 5px 8px;font-size: 0.8rem;}
+      .page-hero .title {
+        font-size: 1.2rem;
+      }
+
+      .page-hero .subtitle {
+        font-size: 0.9rem;
+      }
+
+      .search {
+        padding: 6px 8px;
+      }
+
+      .events-column {
+        gap: 10px;
+      }
+
+      .event-card.custom h3 {
+        font-size: 0.95rem;
+      }
+
+      .event-meta-row {
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.85rem;
+      }
+
+      .date-group {
+        padding: 10px;
+      }
+
+      .date-filters button {
+        padding: 5px 8px;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
+
 <body>
   <canvas id="bgCanvas"></canvas>
 
@@ -103,7 +314,10 @@
 
       <div class="controls">
         <div class="search" role="search" title="イベント検索">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
           <input id="searchInput" placeholder="イベント名・時間・会場で検索" aria-label="検索">
         </div>
       </div>
@@ -129,28 +343,30 @@
   <script src="../js/shared.js"></script>
   <script>
     const events = [
-      {date:'2025-11-01', time:'9:00 - 9:30', place:'本部テント横', title:'体験航海 入場券配布', desc:''},
-      {date:'2025-11-01', time:'10:00 - 11:00', place:'学校桟橋', title:'体験航海', desc:''},
-      {date:'2025-11-01', time:'10:00 - 11:00', place:'ステージ', title:'おいらが歌うしかねぇな（のど自慢）', desc:''},
-      {date:'2025-11-01', time:'11:00 - 12:00', place:'ステージ', title:'弓削知ってる界隈（クイズ大会）', desc:''},
-      {date:'2025-11-01', time:'13:00 - 14:30', place:'ステージ', title:'軽音ライブ', desc:''},
-      {date:'2025-11-01', time:'15:00 - 16:00', place:'ステージ', title:'腕力強いだけじゃダメですか（腕相撲）', desc:''},
-      {date:'2025-11-01', time:'16:00 - 17:00', place:'ステージ', title:'弓削ビジュいいじゃん（コスプレ大会）', desc:''},
-      {date:'2025-11-02', time:'10:00 - 10:30', place:'ステージ', title:'吹奏楽部演奏', desc:''},
-      {date:'2025-11-02', time:'11:00 - 12:00', place:'ステージ', title:'ｴｯﾎｴｯﾎ早食いするって伝えなきゃ（早食い）', desc:''},
-      {date:'2025-11-02', time:'11:30 - 12:00', place:'本部テント横', title:'体験航海 入場券配布', desc:''},
-      {date:'2025-11-02', time:'12:00 - 13:00', place:'学校桟橋', title:'体験航海', desc:''},
-      {date:'2025-11-02', time:'13:00 - 14:30', place:'ステージ', title:'軽音ライブ', desc:''},
-      {date:'2025-11-02', time:'15:00 - 16:00', place:'ステージ', title:'抽選会', desc:''}
+      { date: '2025-11-01', time: '9:00 - 9:30', place: '本部テント横', title: '体験航海 入場券配布', desc: '' },
+      { date: '2025-11-01', time: '10:00 - 11:00', place: '学校桟橋', title: '体験航海', desc: '' },
+      { date: '2025-11-01', time: '10:00 - 11:00', place: 'ステージ', title: 'おいらが歌うしかねぇな（のど自慢）', desc: '' },
+      { date: '2025-11-01', time: '10:00 - 12:00', place: '総合教育科棟1階 マルチメディア教室', title: '商船eスポーツ大会 エントリー受付', desc: '' },
+      { date: '2025-11-01', time: '11:00 - 12:00', place: 'ステージ', title: '弓削知ってる界隈（クイズ大会）', desc: '' },
+      { date: '2025-11-01', time: '13:00 - 14:30', place: 'ステージ', title: '軽音ライブ', desc: '' },
+      { date: '2025-11-01', time: '13:00 - 15:00', place: '総合教育科棟1階 マルチメディア教室', title: '商船eスポーツ大会 本選', desc: '' },
+      { date: '2025-11-01', time: '15:00 - 16:00', place: 'ステージ', title: '腕力強いだけじゃダメですか（腕相撲）', desc: '' },
+      { date: '2025-11-01', time: '16:00 - 17:00', place: 'ステージ', title: '弓削ビジュいいじゃん（コスプレ大会）', desc: '' },
+      { date: '2025-11-02', time: '10:00 - 10:30', place: 'ステージ', title: '吹奏楽部演奏', desc: '' },
+      { date: '2025-11-02', time: '11:00 - 12:00', place: 'ステージ', title: 'ｴｯﾎｴｯﾎ早食いするって伝えなきゃ（早食い）', desc: '' },
+      { date: '2025-11-02', time: '11:30 - 12:00', place: '本部テント横', title: '体験航海 入場券配布', desc: '' },
+      { date: '2025-11-02', time: '12:00 - 13:00', place: '学校桟橋', title: '体験航海', desc: '' },
+      { date: '2025-11-02', time: '13:00 - 14:30', place: 'ステージ', title: '軽音ライブ', desc: '' },
+      { date: '2025-11-02', time: '15:00 - 16:00', place: 'ステージ', title: '抽選会', desc: '' }
     ];
 
-    function formatDateJapanese(dateStr){
+    function formatDateJapanese(dateStr) {
       const d = new Date(dateStr + 'T00:00:00');
       const opts = { month: 'numeric', day: 'numeric', weekday: 'short' };
       return new Intl.DateTimeFormat('ja-JP', opts).format(d);
     }
 
-    function groupByDate(arr){
+    function groupByDate(arr) {
       return arr.reduce((acc, ev) => {
         (acc[ev.date] = acc[ev.date] || []).push(ev);
         return acc;
@@ -165,7 +381,7 @@
     let activeDate = null;
     let filteredEvents = [...events];
 
-    function render(){
+    function render() {
       const grouped = groupByDate(filteredEvents);
       const dates = Object.keys(groupByDate(events)).sort();
       dateFilters.innerHTML = '';
@@ -187,14 +403,14 @@
       dates.forEach(d => {
         const item = document.createElement('div');
         item.className = 'date-item';
-        item.innerHTML = `<div style="font-weight:800">${formatDateJapanese(d)}</div><div style="color:var(--muted)">${(groupByDate(events)[d]||[]).length}</div>`;
-        item.onclick = () => { activeDate = d; applyFilters(); window.scrollTo({top:0,behavior:'smooth'}); };
+        item.innerHTML = `<div style="font-weight:800">${formatDateJapanese(d)}</div><div style="color:var(--muted)">${(groupByDate(events)[d] || []).length}</div>`;
+        item.onclick = () => { activeDate = d; applyFilters(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
         datesListInner.appendChild(item);
       });
 
       scheduleSection.innerHTML = '';
       const sortedDates = Object.keys(grouped).sort();
-      if(sortedDates.length === 0){
+      if (sortedDates.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'poster-placeholder';
         empty.innerHTML = `<div class="placeholder-inner"><div class="placeholder-title">該当するイベントはありません</div><div class="placeholder-sub">検索キーワードや日付フィルターを変えてみてください。</div></div>`;
@@ -214,12 +430,12 @@
         grid.className = 'events-grid';
 
         const parseStartMinutes = t => {
-          if(!t) return 0;
+          if (!t) return 0;
           const part = (t.split('-')[0] || '').trim();
           const [hStr, mStr] = (part.split(':').map(s => s.trim()));
           const h = Number(hStr || 0);
           const m = Number(mStr || 0);
-          if(Number.isNaN(h) || Number.isNaN(m)) return 0;
+          if (Number.isNaN(h) || Number.isNaN(m)) return 0;
           return h * 60 + m;
         };
 
@@ -242,23 +458,24 @@
       });
     }
 
-    function applyFilters(){
+    function applyFilters() {
       const q = (searchInput.value || '').trim().toLowerCase();
       filteredEvents = events.filter(ev => {
-        if(activeDate && ev.date !== activeDate) return false;
-        if(!q) return true;
+        if (activeDate && ev.date !== activeDate) return false;
+        if (!q) return true;
         return ([ev.title, ev.place, ev.time, ev.desc].join(' ')).toLowerCase().includes(q);
       });
       render();
     }
 
-    searchInput.addEventListener('input', ()=>{ applyFilters(); });
+    searchInput.addEventListener('input', () => { applyFilters(); });
 
     render();
 
-    document.getElementById('navToggle').addEventListener('click', ()=>{
+    document.getElementById('navToggle').addEventListener('click', () => {
       document.getElementById('navLinks').classList.toggle('show');
     });
   </script>
 </body>
+
 </html>

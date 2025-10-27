@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>弓削商船商船祭 - ホーム</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
   <canvas id="bgCanvas"></canvas>
 
@@ -28,7 +30,7 @@
   <main id="main" class="container">
     <section class="hero-grid">
       <div class="poster-frame" aria-live="polite">
-        <img id="mainPoster" src="../image/image.png" alt="今年のポスター"/>
+        <img id="mainPoster" src="../image/image.png" alt="今年のポスター" />
       </div>
 
       <aside class="info-card">
@@ -64,43 +66,43 @@
     ];
     window.buildPosterCarousel(posterImagesHome, 'posterTrackHome');
 
-    (function(){
+    (function () {
       const img = document.getElementById('mainPoster');
       const placeholder = document.getElementById('posterPlaceholder');
 
-      function showPlaceholder(){
-        if(placeholder){
+      function showPlaceholder() {
+        if (placeholder) {
           placeholder.style.display = 'flex';
         }
-        if(img){
+        if (img) {
           img.style.display = 'none';
         }
       }
 
-      function hidePlaceholder(){
-        if(placeholder){
+      function hidePlaceholder() {
+        if (placeholder) {
           placeholder.style.display = 'none';
         }
-        if(img){
+        if (img) {
           img.style.display = '';
         }
       }
 
-      if(!img){
+      if (!img) {
         showPlaceholder();
       } else {
-        img.addEventListener('error', function(){ showPlaceholder(); });
+        img.addEventListener('error', function () { showPlaceholder(); });
 
-        img.addEventListener('load', function(){
-          if(!img.naturalWidth || img.naturalWidth === 0){
+        img.addEventListener('load', function () {
+          if (!img.naturalWidth || img.naturalWidth === 0) {
             showPlaceholder();
           } else {
             hidePlaceholder();
           }
         });
 
-        if(img.complete){
-          if(!img.naturalWidth || img.naturalWidth === 0){
+        if (img.complete) {
+          if (!img.naturalWidth || img.naturalWidth === 0) {
             showPlaceholder();
           } else {
             hidePlaceholder();
@@ -110,4 +112,5 @@
     })();
   </script>
 </body>
+
 </html>
