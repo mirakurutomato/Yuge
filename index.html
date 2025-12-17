@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第55回 弓削商船商船祭 | 開花 -Kaika- (終了)</title>
+  <meta name="description" content="2025年度 第55回 弓削商船商船祭は終了いたしました。たくさんのご来場、誠にありがとうございました。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+            display: ['"Zen Maru Gothic"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              pink: '#FF7EB3',
+              orange: '#FF758C',
+              purple: '#8E2DE2',
+              blue: '#4A00E0',
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'scroll': 'scroll 40s linear infinite',
+            'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            scroll: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    /* 背景パーティクル用 */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #FF7EB3, #8E2DE2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* 横スクロールバー非表示 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased overflow-x-hidden relative">
+
+  <canvas id="bg-canvas"></canvas>
+
+  <nav class="fixed top-4 left-0 right-0 z-50 px-4">
+    <div class="max-w-5xl mx-auto glass rounded-2xl shadow-lg px-6 py-3 flex justify-between items-center">
+      <a class="font-display font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-purple">
+        商船祭 <span class="text-xs text-slate-500 ml-1 font-sans">2025</span>
+      </a>
+
+      <div class="hidden md:flex gap-6 font-bold text-sm text-slate-600">
+        <a href="#home" class="hover:text-brand-purple transition">ホーム</a>
+        <a href="#archive" class="hover:text-brand-purple transition">アーカイブ</a>
+        <a href="#feedback" class="hover:text-brand-purple transition">感想アンケート</a>
+      </div>
+
+      <button id="menu-btn" class="md:hidden text-2xl text-slate-700">
+        <i class="ph-bold ph-list"></i>
+      </button>
+    </div>
+
+    <div id="mobile-menu"
+      class="hidden absolute top-20 right-4 w-48 glass rounded-xl shadow-xl p-4 flex-col gap-3 font-bold text-slate-600 md:hidden transition-all origin-top-right">
+      <a href="#home" class="block px-4 py-2 hover:bg-white/50 rounded-lg">ホーム</a>
+      <a href="#archive" class="block px-4 py-2 hover:bg-white/50 rounded-lg">アーカイブ</a>
+      <a href="#feedback" class="block px-4 py-2 hover:bg-white/50 rounded-lg">感想アンケート</a>
+    </div>
+  </nav>
+
+  <section id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+
+      <div class="space-y-6 text-center md:text-left animate-fade-in-up">
+        <div
+          class="inline-block px-4 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-500 font-bold text-sm mb-2">
+          ✅ 開催終了
+        </div>
+
+        <h1 class="font-display font-black text-5xl md:text-7xl leading-tight drop-shadow-sm">
+          Thank You<br>
+          <span class="text-gradient">for Coming!</span>
+        </h1>
+
+        <p class="text-lg text-slate-600 font-medium leading-relaxed">
+          第55回 商船祭「開花 -Kaika-」は、<br>
+          皆様のおかげで無事終了いたしました。<br>
+          たくさんの笑顔と出会えた2日間に心より感謝申し上げます。
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mt-4">
+          <a href="#feedback"
+            class="group relative px-8 py-4 bg-gradient-to-r from-brand-pink to-brand-purple text-white font-bold rounded-xl shadow-lg shadow-brand-pink/40 hover:shadow-brand-pink/60 transition-all hover:-translate-y-1 overflow-hidden">
+            <span class="relative z-10 flex items-center justify-center gap-2">
+              感想を送る <i class="ph-bold ph-paper-plane-right group-hover:translate-x-1 transition"></i>
+            </span>
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-slate-200/60 mt-4">
+          <p class="text-sm text-slate-500 font-bold mb-2">実行委員長</p>
+          <div class="flex items-center justify-center md:justify-start gap-3 bg-white/50 p-3 rounded-xl inline-flex">
+            <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold">
+              森
+            </div>
+            <div class="text-left">
+              <p class="text-xs text-slate-500 font-bold">森山 玲奈 (情報工学科 3年)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative animate-float delay-100">
+        <div
+          class="absolute -inset-4 bg-gradient-to-r from-brand-pink to-brand-purple opacity-20 blur-2xl rounded-full">
+        </div>
+        <div
+          class="relative glass p-4 rounded-3xl shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500">
+          <div class="aspect-[3/4] bg-slate-100 rounded-2xl overflow-hidden relative group">
+            <img src="image/image.png" alt="2025年度ポスター" class="w-full h-full object-cover"
+              onerror="this.src='https://placehold.co/600x800/ffecf2/ff7eb3?text=Poster';">
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-300"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="archive" class="py-16 bg-white/50 border-y border-white/50 overflow-hidden">
+    <div class="text-center mb-10">
+      <span class="text-brand-purple font-bold tracking-wider text-sm uppercase">Archive</span>
+      <h3 class="font-display font-bold text-2xl text-slate-800">これまでの歩み</h3>
+    </div>
+    <div class="flex w-[200%] animate-scroll hover:[animation-play-state:paused]">
+      <div id="poster-track" class="flex gap-8 px-4">
+      </div>
+    </div>
+  </section>
+
+  <section id="feedback" class="py-24 px-4 bg-white/60 relative">
+    <div class="max-w-3xl mx-auto">
+      <div class="glass rounded-3xl shadow-xl overflow-hidden border border-white">
+        <div class="bg-gradient-to-r from-brand-purple to-brand-blue p-8 text-center text-white">
+          <i class="ph-fill ph-chat-circle-text text-5xl mb-4 inline-block"></i>
+          <h2 class="font-display font-bold text-3xl mb-2">商船祭アンケート</h2>
+          <p class="opacity-90 text-sm">来年度以降のより良い開催のため、ぜひ感想をお聞かせください。</p>
+        </div>
+
+        <div class="p-8 md:p-12">
+          <form id="survey-form" class="space-y-8">
+
+            <div class="space-y-3">
+              <label class="block font-bold text-slate-700 flex items-center gap-2">
+                <span class="bg-brand-purple text-white text-xs px-2 py-1 rounded">必須</span>
+                今年の商船祭の満足度を教えてください
+              </label>
+              <div class="flex justify-between max-w-md mx-auto md:mx-0 gap-2">
+                <label class="cursor-pointer text-center group">
+                  <input type="radio" name="satisfaction" value="5" class="peer sr-only" required>
+                  <div class="text-3xl grayscale peer-checked:grayscale-0 group-hover:scale-110 transition">😍</div>
+                  <div class="text-xs font-bold text-slate-400 peer-checked:text-brand-purple">最高</div>
+                </label>
+                <label class="cursor-pointer text-center group">
+                  <input type="radio" name="satisfaction" value="4" class="peer sr-only">
+                  <div class="text-3xl grayscale peer-checked:grayscale-0 group-hover:scale-110 transition">😊</div>
+                  <div class="text-xs font-bold text-slate-400 peer-checked:text-brand-purple">良い</div>
+                </label>
+                <label class="cursor-pointer text-center group">
+                  <input type="radio" name="satisfaction" value="3" class="peer sr-only">
+                  <div class="text-3xl grayscale peer-checked:grayscale-0 group-hover:scale-110 transition">🙂</div>
+                  <div class="text-xs font-bold text-slate-400 peer-checked:text-brand-purple">普通</div>
+                </label>
+                <label class="cursor-pointer text-center group">
+                  <input type="radio" name="satisfaction" value="2" class="peer sr-only">
+                  <div class="text-3xl grayscale peer-checked:grayscale-0 group-hover:scale-110 transition">🤔</div>
+                  <div class="text-xs font-bold text-slate-400 peer-checked:text-brand-purple">微妙</div>
+                </label>
+                <label class="cursor-pointer text-center group">
+                  <input type="radio" name="satisfaction" value="1" class="peer sr-only">
+                  <div class="text-3xl grayscale peer-checked:grayscale-0 group-hover:scale-110 transition">😫</div>
+                  <div class="text-xs font-bold text-slate-400 peer-checked:text-brand-purple">不満</div>
+                </label>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <label class="block font-bold text-slate-700">
+                最も印象に残った、または楽しかった企画は？
+              </label>
+              <input type="text" name="best_event"
+                class="w-full px-4 py-3 rounded-xl bg-slate-50 border-transparent focus:border-brand-purple focus:bg-white focus:ring-0 transition font-medium"
+                placeholder="例: 軽音ライブ、模擬店の焼きそば など">
+            </div>
+
+            <div class="space-y-3">
+              <label class="block font-bold text-slate-700">
+                良かった点、または改善してほしい点
+              </label>
+              <textarea name="feedback" rows="4"
+                class="w-full px-4 py-3 rounded-xl bg-slate-50 border-transparent focus:border-brand-purple focus:bg-white focus:ring-0 transition font-medium"
+                placeholder="ご自由にお書きください。"></textarea>
+            </div>
+
+            <div class="space-y-3">
+              <label class="block font-bold text-slate-700">来年も来たいと思いますか？</label>
+              <div class="flex gap-6">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="next_year" value="はい"
+                    class="w-5 h-5 text-brand-purple focus:ring-brand-purple border-slate-300">
+                  <span class="text-sm font-medium">はい！ぜひ！</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="next_year" value="いいえ"
+                    class="w-5 h-5 text-brand-purple focus:ring-brand-purple border-slate-300">
+                  <span class="text-sm font-medium">いいえ</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit"
+              class="w-full py-4 bg-slate-800 text-white font-bold rounded-xl shadow-lg hover:bg-slate-700 hover:shadow-xl transition-all transform hover:-translate-y-1">
+              アンケートを送信する（メーラー起動）
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-slate-900 text-white pt-16 pb-8 px-4 mt-12 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-pink via-brand-purple to-brand-blue"></div>
+    <div
+      class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+      <div>
+        <h2 class="font-display font-black text-2xl mb-2">弓削商船商船祭</h2>
+        <p class="text-slate-400 text-sm">See you next year!</p>
+      </div>
+      <div class="text-xs text-slate-500 font-mono">
+        <p>&copy; 2025 奥河 董馬（Toma Okugawa）. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 1. 背景パーティクル
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const particles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 5 + 2;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 + 0.5;
+        this.color = Math.random() > 0.5 ? '#FF7EB3' : '#FFD1DC';
+        this.opacity = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y > height) this.y = -10;
+        if (this.x > width) this.x = 0;
+        if (this.x < 0) this.x = width;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // 2. ポスターギャラリー
+    const posters = [
+      "https://www.yuge.ac.jp/wp-content/uploads/2024/10/R06_festivalposter1.jpg",
+      "https://www.yuge.ac.jp/wp-content/uploads/2023/10/R05_festivalposter1.jpg",
+      "https://www.yuge.ac.jp/wp-content/uploads/2022/11/r04_festival_panphlet-e1667611495521.png",
+      "https://www.yuge.ac.jp/wp-content/uploads/2019/10/R01_festivalposter.jpg",
+      "https://www.yuge.ac.jp/wp-content/themes/yugekousen/data/download/2018/h30_festivalposter.png",
+      "https://www.yuge.ac.jp/wp-content/uploads/2013/09/h29_festival.jpg"
+    ];
+    const track = document.getElementById('poster-track');
+    [...posters, ...posters].forEach(src => {
+      const div = document.createElement('div');
+      div.className = 'w-48 md:w-64 flex-shrink-0 transition-transform hover:scale-105 duration-300';
+      div.innerHTML = `<img src="${src}" class="w-full h-auto rounded-xl shadow-lg border-4 border-white" loading="lazy" alt="Past Poster">`;
+      track.appendChild(div);
+    });
+
+    // 3. アンケート送信処理
+    document.getElementById('survey-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const subject = "商船祭 開催後アンケート回答";
+      const body = `
+■満足度: ${data.satisfaction || '-'} / 5
+■印象に残った企画: ${data.best_event || '-'}
+■感想・改善点: ${data.feedback || '-'}
+■来年の意向: ${data.next_year || '-'}
+            `;
+
+      location.href = `mailto:okugawa-touma@outlook.jp?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    // 4. モバイルメニュー
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(a => {
+      a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+  </script>
+</body>
+
+</html>
